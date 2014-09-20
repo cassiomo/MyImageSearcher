@@ -1,10 +1,10 @@
 <h1> Week 2 Project: Grid Image Search </h1>
 
-<bold>Overview:</bold> Build a Google Image Search app which allows a user to select search filters and paginate results infinitely.
+<b>Build a Google Image Search app which allows a user to select search filters and paginate results infinitely.</b>
 
-Time Spent: 4
+<h2>Time Spent: 4</h2>
 
-Completed users stories:
+<h2>Completed users stories:<h2>
 
 [x] Required: User can enter a search query that will display a grid of image results from the Google Image API.<br>
 [x] Required: User can click on "settings" which allows selection of advanced search options to filter results<br>
