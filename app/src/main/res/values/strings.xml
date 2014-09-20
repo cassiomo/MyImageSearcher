@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ImagerSearcher</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="search_query">Enter search query</string>
+    <string name="save_button">Search</string>
+    <string name="title_activity_image_display">Full Image</string>
+
+</resources>
