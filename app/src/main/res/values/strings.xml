@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">ImagerSearcher</string>
+    <string name="app_name">Image Searcher</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="search_query">Enter search query</string>
@@ -17,7 +17,7 @@
     <string name="site_filter_label">Site Filter</string>
     <string name="image_size_prompt">Choose a image size</string>
 
-    <string-array name="image_size_arrays">
+    <string-array name="image_size_items">
         <item>small</item>
         <item>medium</item>
         <item>large</item>
@@ -26,7 +26,7 @@
 
     <string name="color_filter_prompt">Choose a color</string>
 
-    <string-array name="color_filter_arrays">
+    <string-array name="image_color_filter_items">
         <item>black</item>
         <item>blue</item>
         <item>brown</item>
@@ -38,7 +38,7 @@
 
     <string name="image_type_prompt">Choose a image type</string>
 
-    <string-array name="image_type_arrays">
+    <string-array name="image_type_items">
         <item>faces</item>
         <item>photo</item>
         <item>clip art</item>

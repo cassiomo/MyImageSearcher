@@ -20,7 +20,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -30,6 +29,14 @@ public class SearchActivity extends Activity {
     private GridView gvResult;
     private ArrayList<ImageResult> imageResults;
     private ImageResultAdapter aImageResultAdapter;
+    private final int REQUEST_CODE = 20;
+    private Setting mainSetting;
+    private String targetUrl = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=";
+    private String resultSetParam = "rsz=8";
+    private String imgColorFilterParam = "&imgcolor=";
+    private String imgTypeFilterParam = "&imgtype=";
+    private String imgSizeFilterParam = "&imgsz=";
+    private String asSiteSearchParam = "&as_sitesearch=";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +46,8 @@ public class SearchActivity extends Activity {
         imageResults = new ArrayList<ImageResult>();
         aImageResultAdapter = new ImageResultAdapter(this, imageResults);
         gvResult.setAdapter(aImageResultAdapter);
+
+        mainSetting = new Setting();
     }
 
     private void setupViews() {
@@ -58,10 +67,13 @@ public class SearchActivity extends Activity {
     public void onImageSearch(View v) {
         String query = etQuery.getText().toString();
         Toast.makeText(this, "Search for: " + query, Toast.LENGTH_SHORT).show();
-        AsyncHttpClient client = new AsyncHttpClient();
+        String searchUrl = targetUrl + query + resultSetParam;
+        makeImageSearchRequest(searchUrl);
+    }
 
-        //https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=fuzzy%20monkey&rsz=8
-        String searchUrl = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=" + query + "rsz=8";
+    private void makeImageSearchRequest(String searchUrl) {
+
+        AsyncHttpClient client = new AsyncHttpClient();
         client.get(searchUrl, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -71,14 +83,12 @@ public class SearchActivity extends Activity {
                     imageResultJson = response.getJSONObject("responseData").getJSONArray("results");
                     imageResults.clear();
                     aImageResultAdapter.addAll(ImageResult.fromJSONArray(imageResultJson));
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 Log.i("INFO", imageResults.toString());
             }
         });
-
     }
 
     @Override
@@ -94,10 +104,32 @@ public class SearchActivity extends Activity {
 
             case R.id.miSetting:
                 Intent intent = new Intent(this, SettingActivity.class);
-                startActivityForResult(intent, 50);
+                intent.putExtra("setting", mainSetting);
+                startActivityForResult(intent, 20);
                 return true;
             default:
                 return false;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // REQUEST_CODE is defined above
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE) {
+            Setting setting = (Setting) data.getSerializableExtra("setting");
+            mainSetting.colorFilter = setting.colorFilter;
+            mainSetting.imageType = setting.imageType;
+            mainSetting.imageSize = setting.imageSize;
+            mainSetting.siteFilter = setting.siteFilter;
+            String query = etQuery.getText().toString();
+            String settingParams = imgColorFilterParam + mainSetting.colorFilter
+                                   + imgSizeFilterParam + mainSetting.imageSize
+                                   + imgTypeFilterParam + mainSetting.imageType
+                                   + asSiteSearchParam + mainSetting.siteFilter;
+            String searchUrl = targetUrl + query + settingParams + resultSetParam;
+            makeImageSearchRequest(searchUrl);
         }
     }
 }
