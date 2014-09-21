@@ -26,6 +26,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.kemo.imagersearcher.SearchActivity" />
         </activity>
+        <activity
+            android:name=".SettingActivity"
+            android:label="@string/title_activity_setting" >
+        </activity>
     </application>
 
 </manifest>

@@ -16,7 +16,7 @@ public class ImageDisplayActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_display);
 
-        //dogetActionBar().hide();
+        //getActionBar().hide();
 
         //String url = getIntent().getStringExtra("url");
         ImageResult result = (ImageResult)getIntent().getSerializableExtra("result");

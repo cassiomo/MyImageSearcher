@@ -7,5 +7,45 @@
     <string name="search_query">Enter search query</string>
     <string name="save_button">Search</string>
     <string name="title_activity_image_display">Full Image</string>
+    <string name="advance_search">Advanced search options</string>
+    <string name="image_size">Image Size</string>
+    <string name="small_size">small</string>
+    <string name="color_filter">Color Filter</string>
+    <string name="image_type">Image Type</string>
+    <string name="site_filter">site</string>
+    <string name="yahoo_site">yahoo.com</string>
+    <string name="site_filter_label">Site Filter</string>
+    <string name="image_size_prompt">Choose a image size</string>
+
+    <string-array name="image_size_arrays">
+        <item>small</item>
+        <item>medium</item>
+        <item>large</item>
+        <item>extra-large</item>
+    </string-array>
+
+    <string name="color_filter_prompt">Choose a color</string>
+
+    <string-array name="color_filter_arrays">
+        <item>black</item>
+        <item>blue</item>
+        <item>brown</item>
+        <item>green</item>
+        <item>yellow</item>
+        <item>red</item>
+        <item>purple</item>
+    </string-array>
+
+    <string name="image_type_prompt">Choose a image type</string>
+
+    <string-array name="image_type_arrays">
+        <item>faces</item>
+        <item>photo</item>
+        <item>clip art</item>
+        <item>line art</item>
+    </string-array>
+
+    <string name="title_activity_setting">SettingActivity</string>
+    <string name="setting_save_button">Save</string>
 
 </resources>

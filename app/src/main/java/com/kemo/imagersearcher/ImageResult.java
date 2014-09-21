@@ -14,7 +14,6 @@ import java.util.ArrayList;
  */
 public class ImageResult implements Serializable {
 
-
     private static final long serialVersionUID = 5505281653872724409L;
 
     public String fullUrl;
