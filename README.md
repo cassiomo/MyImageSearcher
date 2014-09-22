@@ -2,7 +2,7 @@
 
 Build a Google Image Search app which allows a user to select search filters and paginate results infinitely
 
-<h3>Time Spent: 4 + 4</h3>
+<h3>Time Spent: 15 hours </h3>
 
 <h3>Completed users stories:<h3>
 
