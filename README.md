@@ -1,6 +1,6 @@
 <h1> Week 2 Project: Grid Image Search </h1>
 
-<h2><b>Build a Google Image Search app which allows a user to select search filters and paginate results infinitely.</b></h2>
+Build a Google Image Search app which allows a user to select search filters and paginate results infinitely
 
 <h3>Time Spent: 4</h3>
 

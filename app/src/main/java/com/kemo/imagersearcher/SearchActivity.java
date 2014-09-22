@@ -48,7 +48,7 @@ public class SearchActivity extends Activity {
         aImageResultAdapter = new ImageResultAdapter(this, imageResults);
         gvResult.setAdapter(aImageResultAdapter);
 
-        mainSetting = new Setting();
+        //mainSetting = new Setting();
     }
 
     private void setupViews() {
@@ -69,12 +69,19 @@ public class SearchActivity extends Activity {
         String query = etQuery.getText().toString();
         if (!StringUtils.isEmpty(query)) {
             Toast.makeText(this, "Search for: " + query, Toast.LENGTH_SHORT).show();
-            String settingParams = imgColorFilterParam + mainSetting.colorFilter
-                    + imgSizeFilterParam + mainSetting.imageSize
-                    + imgTypeFilterParam + mainSetting.imageType
-                    + asSiteSearchParam + mainSetting.siteFilter;
-            //String searchUrl = targetUrl + query + settingParams + resultSetParam;
-            String searchUrl = targetUrl + query + resultSetParam;
+
+            String settingParams = null;
+            String searchUrl = null;
+
+            if (mainSetting != null) {
+                settingParams = imgColorFilterParam + mainSetting.colorFilter
+                        + imgSizeFilterParam + mainSetting.imageSize
+                        + imgTypeFilterParam + mainSetting.imageType
+                        + asSiteSearchParam + mainSetting.siteFilter;
+                searchUrl = targetUrl + query + settingParams + resultSetParam;
+            } else {
+                searchUrl = targetUrl + query + resultSetParam;
+            }
             makeImageSearchRequest(searchUrl);
         } else {
             Toast.makeText(this, "Please enter search query", Toast.LENGTH_SHORT).show();
@@ -114,6 +121,9 @@ public class SearchActivity extends Activity {
 
             case R.id.miSetting:
                 Intent intent = new Intent(this, SettingActivity.class);
+                if (mainSetting == null) {
+                    mainSetting = new Setting();
+                }
                 intent.putExtra("setting", mainSetting);
                 startActivityForResult(intent, 20);
                 return true;

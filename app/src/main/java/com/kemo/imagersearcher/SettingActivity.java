@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.kemo.imagersearcher.R;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,20 +41,27 @@ public class SettingActivity extends Activity {
         Intent intent = getIntent();
         setting = (Setting)intent.getSerializableExtra("setting");
 
-        String selectedImageType = spImageType.getSelectedItem().toString();
-        spImageType.setSelection(getIndex(spImageType,setting.imageType));
+        if (!StringUtils.isEmpty(setting.imageType)) {
+            String selectedImageType = spImageType.getSelectedItem().toString();
+            spImageType.setSelection(getIndex(spImageType, setting.imageType));
+        }
 
-        String selectedImageSize = spImageSize.getSelectedItem().toString();
-        spImageSize.setSelection(getIndex(spImageSize,setting.imageSize));
+        if (!StringUtils.isEmpty(setting.imageSize)) {
+            String selectedImageSize = spImageSize.getSelectedItem().toString();
+            spImageSize.setSelection(getIndex(spImageSize, setting.imageSize));
+        }
 
-        String selectedImageColorFilter = spColorFilter.getSelectedItem().toString();
-        spColorFilter.setSelection(getIndex(spColorFilter,setting.colorFilter));
+        if (!StringUtils.isEmpty(setting.colorFilter)) {
+            String selectedImageColorFilter = spColorFilter.getSelectedItem().toString();
+            spColorFilter.setSelection(getIndex(spColorFilter, setting.colorFilter));
+        }
 
-        etSite.setText(setting.siteFilter);
+        if (!StringUtils.isEmpty(setting.colorFilter)) {
+            etSite.setText(setting.siteFilter);
+        }
     }
 
     private int getIndex(Spinner spinner,String string){
-
         int index = 0;
         for (int i = 0; i < spinner.getAdapter().getCount(); i++){
             if (spinner.getItemAtPosition(i).equals(string)){
@@ -60,7 +69,6 @@ public class SettingActivity extends Activity {
             }
         }
         return index;
-
     }
 
     private void setUpView() {
