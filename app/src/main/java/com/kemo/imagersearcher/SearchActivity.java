@@ -33,11 +33,23 @@ public class SearchActivity extends Activity {
     private final int REQUEST_CODE = 20;
     private Setting mainSetting;
     private String targetUrl = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=";
-    private String resultSetParam = "rsz=8";
+    private String resultSetParam = "&rsz=8";
     private String imgColorFilterParam = "&imgcolor=";
     private String imgTypeFilterParam = "&imgtype=";
     private String imgSizeFilterParam = "&imgsz=";
     private String asSiteSearchParam = "&as_sitesearch=";
+    private String startParam="&start=";
+    private String searchUrl;
+    private int increment;
+    private int maxPage = 8;
+
+    private EndlessScrollListener endlessScrollListener = new EndlessScrollListener() {
+        @Override
+        public void onLoadMore(int page, int totalItemsCount) {
+            Log.i("INFO", "Loading more items");
+            loadMoreDataFromApi(page);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +59,21 @@ public class SearchActivity extends Activity {
         imageResults = new ArrayList<ImageResult>();
         aImageResultAdapter = new ImageResultAdapter(this, imageResults);
         gvResult.setAdapter(aImageResultAdapter);
+        gvResult.setOnScrollListener(endlessScrollListener);
+    }
 
-        //mainSetting = new Setting();
+    public void loadMoreDataFromApi(int offset) {
+        // increment the starting image number
+        increment += 8;
+        String incrementPage = startParam + increment;
+        if (!searchUrl.contains(startParam)) {
+            searchUrl = searchUrl + incrementPage;
+        } else {
+            int lastStartIndex = searchUrl.lastIndexOf(startParam);
+            searchUrl = searchUrl.substring(0,lastStartIndex);
+            searchUrl = searchUrl + incrementPage;
+        }
+        makeImageSearchRequest(searchUrl, offset);
     }
 
     private void setupViews() {
@@ -66,12 +91,13 @@ public class SearchActivity extends Activity {
     }
 
     public void onImageSearch(View v) {
+        increment = 0;
         String query = etQuery.getText().toString();
         if (!StringUtils.isEmpty(query)) {
             Toast.makeText(this, "Search for: " + query, Toast.LENGTH_SHORT).show();
 
             String settingParams = null;
-            String searchUrl = null;
+            //String searchUrl = null;
 
             if (mainSetting != null) {
                 settingParams = imgColorFilterParam + mainSetting.colorFilter
@@ -79,33 +105,43 @@ public class SearchActivity extends Activity {
                         + imgTypeFilterParam + mainSetting.imageType
                         + asSiteSearchParam + mainSetting.siteFilter;
                 searchUrl = targetUrl + query + settingParams + resultSetParam;
+                //searchUrl = targetUrl + query + settingParams;
             } else {
                 searchUrl = targetUrl + query + resultSetParam;
             }
-            makeImageSearchRequest(searchUrl);
+            makeImageSearchRequest(searchUrl,0);
         } else {
             Toast.makeText(this, "Please enter search query", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void makeImageSearchRequest(String searchUrl) {
+    private void makeImageSearchRequest(String searchUrl, final int page) {
 
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get(searchUrl, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.d("DEBUG", response.toString());
-                JSONArray imageResultJson = null;
-                try {
-                    imageResultJson = response.getJSONObject("responseData").getJSONArray("results");
-                    imageResults.clear();
-                    aImageResultAdapter.addAll(ImageResult.fromJSONArray(imageResultJson));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                Log.i("INFO", imageResults.toString());
+        if (maxPage > page) {
+
+            if (page == 0) {
+                imageResults.clear();
             }
-        });
+
+            AsyncHttpClient client = new AsyncHttpClient();
+            client.get(searchUrl, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    Log.d("DEBUG", response.toString());
+                    JSONArray imageResultJson = null;
+
+                    try {
+                        imageResultJson = response.getJSONObject("responseData").getJSONArray("results");
+                        aImageResultAdapter.addAll(ImageResult.fromJSONArray(imageResultJson));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    Log.i("INFO", imageResults.toString());
+                }
+            });
+        } else {
+            Toast.makeText(this, "End of the maximum page (8) ", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -145,13 +181,6 @@ public class SearchActivity extends Activity {
             mainSetting.siteFilter = newSetting.siteFilter;
 
             Toast.makeText(this, "New Setting is: " + mainSetting, Toast.LENGTH_SHORT).show();
-//            String query = etQuery.getText().toString();
-//            String settingParams = imgColorFilterParam + mainSetting.colorFilter
-//                                   + imgSizeFilterParam + mainSetting.imageSize
-//                                   + imgTypeFilterParam + mainSetting.imageType
-//                                   + asSiteSearchParam + mainSetting.siteFilter;
-//            String searchUrl = targetUrl + query + settingParams + resultSetParam;
-//            makeImageSearchRequest(searchUrl);
         }
     }
 }

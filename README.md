@@ -2,7 +2,7 @@
 
 Build a Google Image Search app which allows a user to select search filters and paginate results infinitely
 
-<h3>Time Spent: 4</h3>
+<h3>Time Spent: 4 + 4</h3>
 
 <h3>Completed users stories:<h3>
 
@@ -13,7 +13,7 @@ Build a Google Image Search app which allows a user to select search filters and
 &nbsp;&nbsp;&nbsp;&nbsp;Color filter (black, blue, brown, gray, green, etc...)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Type (faces, photo, clip art, line art)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Site (espn.com)<br>
-[ ] Required: Subsequent searches will have any filters applied to the search results<br>
+[x] Required: Subsequent searches will have any filters applied to the search results<br>
 [x] Required: User can tap on any image in results to see the image full-screen<br>
 [ ] Required: User can scroll down “infinitely” to continue loading more image results (up to 8 pages)<br>
 Advanced: Robust error handling, check if internet is available, handle error cases, network failures<br>
