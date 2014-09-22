@@ -105,7 +105,6 @@ public class SearchActivity extends Activity {
                         + imgTypeFilterParam + mainSetting.imageType
                         + asSiteSearchParam + mainSetting.siteFilter;
                 searchUrl = targetUrl + query + settingParams + resultSetParam;
-                //searchUrl = targetUrl + query + settingParams;
             } else {
                 searchUrl = targetUrl + query + resultSetParam;
             }

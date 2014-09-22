@@ -15,7 +15,7 @@ Build a Google Image Search app which allows a user to select search filters and
 &nbsp;&nbsp;&nbsp;&nbsp;Site (espn.com)<br>
 [x] Required: Subsequent searches will have any filters applied to the search results<br>
 [x] Required: User can tap on any image in results to see the image full-screen<br>
-[ ] Required: User can scroll down “infinitely” to continue loading more image results (up to 8 pages)<br>
+[x] Required: User can scroll down “infinitely” to continue loading more image results (up to 8 pages)<br>
 Advanced: Robust error handling, check if internet is available, handle error cases, network failures<br>
 Advanced: Use the ActionBar SearchView or custom layout as the query box instead of an EditText<br>
 Advanced: User can share an image to their friends or email it to themselves<br>
