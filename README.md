@@ -23,3 +23,5 @@ Advanced: Replace Filter Settings Activity with a lightweight modal overlay<br>
 Advanced: Improve the user interface and experiment with image assets and/or styling and coloring<br>
 Bonus: Use the StaggeredGridView to display improve the grid of image results<br>
 Bonus: User can zoom or pan images displayed in full-screen detail view<br>
+
+![Alt text](https://github.com/cassiomo/MyImageSearcher/blob/master/imagesearch.gif "imagesearch.gif")
