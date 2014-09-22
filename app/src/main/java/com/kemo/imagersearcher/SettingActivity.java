@@ -35,8 +35,32 @@ public class SettingActivity extends Activity {
         addItemsOnImageTypeSpinner();
         addItemsOnColorFilterSpinner();
         addItemsOnImageSizeSpinner();
-        setting = new Setting();
-        setting.siteFilter = etSite.toString();
+
+        Intent intent = getIntent();
+        setting = (Setting)intent.getSerializableExtra("setting");
+
+        String selectedImageType = spImageType.getSelectedItem().toString();
+        spImageType.setSelection(getIndex(spImageType,setting.imageType));
+
+        String selectedImageSize = spImageSize.getSelectedItem().toString();
+        spImageSize.setSelection(getIndex(spImageSize,setting.imageSize));
+
+        String selectedImageColorFilter = spColorFilter.getSelectedItem().toString();
+        spColorFilter.setSelection(getIndex(spColorFilter,setting.colorFilter));
+
+        etSite.setText(setting.siteFilter);
+    }
+
+    private int getIndex(Spinner spinner,String string){
+
+        int index = 0;
+        for (int i = 0; i < spinner.getAdapter().getCount(); i++){
+            if (spinner.getItemAtPosition(i).equals(string)){
+                index = i;
+            }
+        }
+        return index;
+
     }
 
     private void setUpView() {
@@ -66,6 +90,7 @@ public class SettingActivity extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 setting.imageSize = spImageSize.getSelectedItem().toString();
+                System.out.println(setting.imageSize);
             }
 
             @Override
@@ -91,8 +116,10 @@ public class SettingActivity extends Activity {
 
     public void onSaveSetting(View v) {
         Intent intent = new Intent(this, SearchActivity.class);
+        setting.siteFilter = etSite.getText().toString();
         intent.putExtra("setting", setting);
-        startActivity(intent);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     @Override

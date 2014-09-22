@@ -7,8 +7,8 @@
 <h3>Completed users stories:<h3>
 
 [x] Required: User can enter a search query that will display a grid of image results from the Google Image API.<br>
-[ ] Required: User can click on "settings" which allows selection of advanced search options to filter results<br>
-[ ] Required: User can configure advanced search filters such as:<br>
+[x] Required: User can click on "settings" which allows selection of advanced search options to filter results<br>
+[x] Required: User can configure advanced search filters such as:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Size (small, medium, large, extra-large)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Color filter (black, blue, brown, gray, green, etc...)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Type (faces, photo, clip art, line art)<br>

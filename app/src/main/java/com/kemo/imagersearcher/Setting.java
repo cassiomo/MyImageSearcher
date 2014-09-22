@@ -15,4 +15,14 @@ public class Setting implements Serializable {
     public String colorFilter = "blue";
     public String imageType = "faces";
     public String siteFilter = "yahoo.com";
+
+    @Override
+    public String toString() {
+        return "Setting{" +
+                "imageSize='" + imageSize + '\'' +
+                ", colorFilter='" + colorFilter + '\'' +
+                ", imageType='" + imageType + '\'' +
+                ", siteFilter='" + siteFilter + '\'' +
+                '}';
+    }
 }
