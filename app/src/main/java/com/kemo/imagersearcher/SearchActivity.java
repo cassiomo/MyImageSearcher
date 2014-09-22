@@ -102,8 +102,10 @@ public class SearchActivity extends Activity {
             if (mainSetting != null) {
                 settingParams = imgColorFilterParam + mainSetting.colorFilter
                         + imgSizeFilterParam + mainSetting.imageSize
-                        + imgTypeFilterParam + mainSetting.imageType
-                        + asSiteSearchParam + mainSetting.siteFilter;
+                        + imgTypeFilterParam + mainSetting.imageType;
+                if (!StringUtils.isEmpty(mainSetting.siteFilter)) {
+                    settingParams = settingParams + asSiteSearchParam + mainSetting.siteFilter;
+                }
                 searchUrl = targetUrl + query + settingParams + resultSetParam;
             } else {
                 searchUrl = targetUrl + query + resultSetParam;
