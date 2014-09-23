@@ -13,6 +13,7 @@
     <string name="color_filter">Color Filter</string>
     <string name="image_type">Image Type</string>
     <string name="site_filter">site</string>
+    <string name="app_title">ImageSearcher</string>
     <string name="yahoo_site">yahoo.com</string>
     <string name="site_filter_label">Site Filter</string>
     <string name="image_size_prompt">Choose a image size</string>
@@ -45,7 +46,7 @@
         <item>line art</item>
     </string-array>
 
-    <string name="title_activity_setting">SettingActivity</string>
+    <string name="title_activity_setting">Setting</string>
     <string name="setting_save_button">Save</string>
 
 </resources>

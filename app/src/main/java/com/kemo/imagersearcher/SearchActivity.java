@@ -7,14 +7,22 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+//import android.view.Menu;
+//import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+//import com.actionbarsherlock.widget.SearchView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Downloader;
@@ -28,10 +36,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 
-public class SearchActivity extends Activity {
+public class SearchActivity extends SherlockFragmentActivity {
 
     private EditText etQuery;
     private GridView gvResult;
+    private SearchView searchView;
     private ArrayList<ImageResult> imageResults;
     private ImageResultAdapter aImageResultAdapter;
     private final int REQUEST_CODE = 20;
@@ -60,6 +69,9 @@ public class SearchActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         setupViews();
+        //setupTabs();
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME);
+        //getSupportActionBar().setCustomView(R.layout.actionbar_title);
         imageResults = new ArrayList<ImageResult>();
         aImageResultAdapter = new ImageResultAdapter(this, imageResults);
         gvResult.setAdapter(aImageResultAdapter);
@@ -80,8 +92,15 @@ public class SearchActivity extends Activity {
         makeImageSearchRequest(searchUrl, offset);
     }
 
+//    private void setupTabs() {
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+//        actionBar.setDisplayShowHomeEnabled(false);
+//        actionBar.setDisplayShowTitleEnabled(false);
+//    }
+
     private void setupViews() {
-        etQuery = (EditText) findViewById(R.id.etQuery);
+        //etQuery = (EditText) findViewById(R.id.etQuery);
         gvResult = (GridView) findViewById(R.id.gvResult);
         gvResult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -94,9 +113,8 @@ public class SearchActivity extends Activity {
         });
     }
 
-    public void onImageSearch(View v) {
+    public void executeQuery(String query) {
         increment = 0;
-        String query = etQuery.getText().toString();
         if (!StringUtils.isEmpty(query)) {
             Toast.makeText(this, "Search for: " + query, Toast.LENGTH_SHORT).show();
 
@@ -119,6 +137,33 @@ public class SearchActivity extends Activity {
             Toast.makeText(this, "Please enter search query", Toast.LENGTH_SHORT).show();
         }
     }
+
+//    public void onImageSearch(View v) {
+//        String query = etQuery.getText().toString();
+//        executeQuery(query);
+//        increment = 0;
+//        if (!StringUtils.isEmpty(query)) {
+//            Toast.makeText(this, "Search for: " + query, Toast.LENGTH_SHORT).show();
+//
+//            String settingParams = null;
+//            //String searchUrl = null;
+//
+//            if (mainSetting != null) {
+//                settingParams = imgColorFilterParam + mainSetting.colorFilter
+//                        + imgSizeFilterParam + mainSetting.imageSize
+//                        + imgTypeFilterParam + mainSetting.imageType;
+//                if (!StringUtils.isEmpty(mainSetting.siteFilter)) {
+//                    settingParams = settingParams + asSiteSearchParam + mainSetting.siteFilter;
+//                }
+//                searchUrl = targetUrl + query + settingParams + resultSetParam;
+//            } else {
+//                searchUrl = targetUrl + query + resultSetParam;
+//            }
+//            makeImageSearchRequest(searchUrl,0);
+//        } else {
+//            Toast.makeText(this, "Please enter search query", Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
     private void makeImageSearchRequest(String searchUrl, final int page) {
 
@@ -146,25 +191,17 @@ public class SearchActivity extends Activity {
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                    if (!isNetworkAvailable()) {
-                        Toast.makeText(getApplicationContext(), "Network is not available", Toast.LENGTH_LONG).show();
-                    }
+                    Toast.makeText(getApplicationContext(), "Network is not available", Toast.LENGTH_LONG).show();
                 }
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-
-                    boolean network = isNetworkAvailable();
-                    //if (!isNetworkAvailable()) {
-                        Toast.makeText(getApplicationContext(), "Network is not available", Toast.LENGTH_LONG).show();
-                    //}
+                   Toast.makeText(getApplicationContext(), "Network is not available", Toast.LENGTH_LONG).show();
                 }
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                    if (!isNetworkAvailable()) {
-                        Toast.makeText(getApplicationContext(), "Network is not available", Toast.LENGTH_LONG).show();
-                    }
+                    Toast.makeText(getApplicationContext(), "Network is not available", Toast.LENGTH_LONG).show();
                 }
             });
         } else {
@@ -172,11 +209,52 @@ public class SearchActivity extends Activity {
         }
     }
 
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.search, menu);
         return true;
+    } */
+
+    /*
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem actionViewItem = menu.findItem(R.id.miSetting);
+        View v = actionViewItem.getActionView();
+        Button b = (Button) v.findViewById(R.id.btSearch);
+        // Handle button click here
+        return super.onPrepareOptionsMenu(menu);
+    }
+    */
+
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getSupportMenuInflater();
+//        inflater.inflate(R.menu.search, menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getSupportMenuInflater();
+        inflater.inflate(R.menu.search, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        searchView = (SearchView) searchItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // perform query here
+                executeQuery(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -200,6 +278,7 @@ public class SearchActivity extends Activity {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        boolean isWiFi = activeNetworkInfo.getType() == ConnectivityManager.TYPE_WIFI;
         return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
 
@@ -209,13 +288,15 @@ public class SearchActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE) {
-            Setting newSetting = (Setting) data.getSerializableExtra("setting");
-            mainSetting.colorFilter = newSetting.colorFilter;
-            mainSetting.imageType = newSetting.imageType;
-            mainSetting.imageSize = newSetting.imageSize;
-            mainSetting.siteFilter = newSetting.siteFilter;
+            if (data !=null) {
+                Setting newSetting = (Setting) data.getSerializableExtra("setting");
+                mainSetting.colorFilter = newSetting.colorFilter;
+                mainSetting.imageType = newSetting.imageType;
+                mainSetting.imageSize = newSetting.imageSize;
+                mainSetting.siteFilter = newSetting.siteFilter;
 
-            Toast.makeText(this, "New Setting is: " + mainSetting, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "New Setting is: " + mainSetting, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }
