@@ -1,7 +1,10 @@
 package com.kemo.imagersearcher;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -14,6 +17,7 @@ import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.squareup.picasso.Downloader;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Header;
@@ -139,6 +143,29 @@ public class SearchActivity extends Activity {
                     }
                     Log.i("INFO", imageResults.toString());
                 }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                    if (!isNetworkAvailable()) {
+                        Toast.makeText(getApplicationContext(), "Network is not available", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+
+                    boolean network = isNetworkAvailable();
+                    //if (!isNetworkAvailable()) {
+                        Toast.makeText(getApplicationContext(), "Network is not available", Toast.LENGTH_LONG).show();
+                    //}
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    if (!isNetworkAvailable()) {
+                        Toast.makeText(getApplicationContext(), "Network is not available", Toast.LENGTH_LONG).show();
+                    }
+                }
             });
         } else {
             Toast.makeText(this, "End of the maximum page (8) ", Toast.LENGTH_SHORT).show();
@@ -167,6 +194,13 @@ public class SearchActivity extends Activity {
             default:
                 return false;
         }
+    }
+
+    private Boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
 
     @Override
