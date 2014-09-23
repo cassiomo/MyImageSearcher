@@ -16,8 +16,8 @@ Build a Google Image Search app which allows a user to select search filters and
 [x] Required: Subsequent searches will have any filters applied to the search results<br>
 [x] Required: User can tap on any image in results to see the image full-screen<br>
 [x] Required: User can scroll down “infinitely” to continue loading more image results (up to 8 pages)<br>
-Advanced: Robust error handling, check if internet is available, handle error cases, network failures<br>
-Advanced: Use the ActionBar SearchView or custom layout as the query box instead of an EditText<br>
+[x] Advanced: Robust error handling, check if internet is available, handle error cases, network failures<br>
+[x] Advanced: Use the ActionBar SearchView or custom layout as the query box instead of an EditText<br>
 Advanced: User can share an image to their friends or email it to themselves<br>
 Advanced: Replace Filter Settings Activity with a lightweight modal overlay<br>
 Advanced: Improve the user interface and experiment with image assets and/or styling and coloring<br>
