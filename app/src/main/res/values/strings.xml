@@ -7,7 +7,7 @@
     <string name="search_query">Enter search query</string>
     <string name="save_button">Search</string>
     <string name="title_activity_image_display">Full Image</string>
-    <string name="advance_search">Advanced search options</string>
+    <string name="advance_search">Configuration</string>
     <string name="image_size">Image Size</string>
     <string name="small_size">small</string>
     <string name="color_filter">Color Filter</string>
@@ -48,5 +48,6 @@
 
     <string name="title_activity_setting">Setting</string>
     <string name="setting_save_button">Save</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

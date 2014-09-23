@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 //import android.view.Menu;
 //import android.view.MenuItem;
@@ -36,7 +37,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 
-public class SearchActivity extends SherlockFragmentActivity {
+public class SearchActivity extends SherlockFragmentActivity
+        implements EditSettingDialog.EditSettingDialogListener  {
 
     private EditText etQuery;
     private GridView gvResult;
@@ -76,6 +78,14 @@ public class SearchActivity extends SherlockFragmentActivity {
         aImageResultAdapter = new ImageResultAdapter(this, imageResults);
         gvResult.setAdapter(aImageResultAdapter);
         gvResult.setOnScrollListener(endlessScrollListener);
+        //showSettingDialog();
+        //showEditDialog();
+    }
+
+    private void showSettingDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        EditSettingDialog editSettingDialog = EditSettingDialog.newInstance("Advance Filters");
+        editSettingDialog.show(fm, "fragment_setting");
     }
 
     public void loadMoreDataFromApi(int offset) {
@@ -262,16 +272,47 @@ public class SearchActivity extends SherlockFragmentActivity {
         switch (item.getItemId()) {
 
             case R.id.miSetting:
-                Intent intent = new Intent(this, SettingActivity.class);
-                if (mainSetting == null) {
-                    mainSetting = new Setting();
-                }
-                intent.putExtra("setting", mainSetting);
-                startActivityForResult(intent, 20);
+//                Intent intent = new Intent(this, SettingActivity.class);
+//                intent.putExtra("setting", mainSetting);
+//                startActivityForResult(intent, 20);
+
+                showSettingDialog();
                 return true;
             default:
                 return false;
+
+//            case R.id.miSetting:
+//                Intent intent = new Intent(this, SettingActivity.class);
+//                if (mainSetting == null) {
+//                    mainSetting = new Setting();
+//                }
+//                intent.putExtra("setting", mainSetting);
+//                startActivityForResult(intent, 20);
+//                return true;
+//            default:
+//                return false;
         }
+    }
+
+    @Override
+    public void onFinishEditDialog(Setting newSetting) {
+        if (newSetting !=null) {
+            if (mainSetting == null) {
+                mainSetting = new Setting();
+            }
+            mainSetting.colorFilter = newSetting.colorFilter;
+            mainSetting.imageType = newSetting.imageType;
+            mainSetting.imageSize = newSetting.imageSize;
+            mainSetting.siteFilter = newSetting.siteFilter;
+
+            Toast.makeText(this, "New Setting is: " + mainSetting, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void showEditDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        EditNameDialog editNameDialog = EditNameDialog.newInstance("Some Title");
+        editNameDialog.show(fm, "fragment_edit_name");
     }
 
     private Boolean isNetworkAvailable() {
@@ -290,6 +331,9 @@ public class SearchActivity extends SherlockFragmentActivity {
         if (requestCode == REQUEST_CODE) {
             if (data !=null) {
                 Setting newSetting = (Setting) data.getSerializableExtra("setting");
+                if (mainSetting == null) {
+                    mainSetting = new Setting();
+                }
                 mainSetting.colorFilter = newSetting.colorFilter;
                 mainSetting.imageType = newSetting.imageType;
                 mainSetting.imageSize = newSetting.imageSize;
