@@ -19,7 +19,7 @@ Build a Google Image Search app which allows a user to select search filters and
 [x] Advanced: Robust error handling, check if internet is available, handle error cases, network failures<br>
 [x] Advanced: Use the ActionBar SearchView or custom layout as the query box instead of an EditText<br>
 Advanced: User can share an image to their friends or email it to themselves<br>
-Advanced: Replace Filter Settings Activity with a lightweight modal overlay<br>
+[x] Advanced: Replace Filter Settings Activity with a lightweight modal overlay<br>
 Advanced: Improve the user interface and experiment with image assets and/or styling and coloring<br>
 Bonus: Use the StaggeredGridView to display improve the grid of image results<br>
 Bonus: User can zoom or pan images displayed in full-screen detail view<br>
